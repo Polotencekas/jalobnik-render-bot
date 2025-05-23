@@ -1,21 +1,14 @@
 import os
-from aiogram import Bot, Dispatcher, types, executor
-from aiogram.types import ParseMode
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram import Bot, Dispatcher, executor, types
 
 API_TOKEN = os.getenv("BOT_TOKEN")
 
-bot = Bot(token=API_TOKEN, parse_mode=ParseMode.HTML)
-storage = MemoryStorage()
-dp = Dispatcher(bot, storage=storage)
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher(bot)
 
 @dp.message_handler(commands=["start"])
 async def start_handler(message: types.Message):
-    await message.answer("Бот запущен и готов к работе!")
-
-@dp.message_handler(commands=["help"])
-async def help_handler(message: types.Message):
-    await message.answer("Список команд: /start, /help")
+    await message.reply("Привет! Бот работает.")
 
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True)
