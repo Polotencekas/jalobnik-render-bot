@@ -5,31 +5,24 @@ import sqlite3
 
 from fastapi import FastAPI
 from aiogram import Bot, Dispatcher, types
-from aiogram.enums import ParseMode
-from aiogram.filters import CommandStart, Command
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
-from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.fsm.storage.memory import MemoryStorage
-from aiogram.client.default import DefaultBotProperties
-from aiogram import Router
-from aiogram.cli import start_polling
+from aiogram.utils import executor
+from aiogram.types import ParseMode, Message, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.dispatcher.filters import CommandStart, Command
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 API_TOKEN = os.getenv("BOT_TOKEN")
 
-bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-dp = Dispatcher(storage=MemoryStorage())
+bot = Bot(token=API_TOKEN, parse_mode=ParseMode.HTML)
+storage = MemoryStorage()
+dp = Dispatcher(bot, storage=storage)
 
-router = Router()
-dp.include_router(router)
-
-@router.message(CommandStart())
+@dp.message_handler(commands=["start"])
 async def cmd_start(message: Message):
     await message.answer("Бот запущен и готов к работе!")
 
-@router.message(Command("help"))
+@dp.message_handler(commands=["help"])
 async def cmd_help(message: Message):
     await message.answer("Вот список доступных команд: /start /help")
 
 if __name__ == "__main__":
-    start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, skip_updates=True)
