@@ -13,7 +13,7 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.default import DefaultBotProperties
 from aiogram import Router
-from aiogram import executor  # ← Заменено с runner на executor
+from aiogram import executor  # Заменено с runner на executor
 
 API_TOKEN = os.getenv("BOT_TOKEN")
 
