@@ -8,7 +8,7 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.default import DefaultBotProperties
 from aiogram import Router
-from aiogram.runner import start_polling  # <- правильно импортируем polling
+from aiogram.utils.executor import start_polling  # <- так запускаем polling
 
 API_TOKEN = os.getenv("BOT_TOKEN")
 
