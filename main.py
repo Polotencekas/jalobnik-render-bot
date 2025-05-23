@@ -13,7 +13,7 @@ from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.default import DefaultBotProperties
 from aiogram import Router
-from aiogram import executor  # Заменено с runner на executor
+from aiogram import executor  # Используем executor для запуска
 
 API_TOKEN = os.getenv("BOT_TOKEN")
 
@@ -28,7 +28,7 @@ dp.include_router(router)
 async def cmd_start(message: Message):
     await message.answer("Бот запущен и готов к работе!")
 
-# Пример хендлера обычной команды
+# Пример хендлера обычной команды /help
 @router.message(Command("help"))
 async def cmd_help(message: Message):
     await message.answer("Вот список доступных команд: /start /help")
